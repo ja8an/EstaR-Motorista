@@ -1,0 +1,49 @@
+page-login {
+
+    $blur: 2px;
+
+    ion-content:before {
+        content: "";
+
+        position: fixed;
+
+        left: 0;
+        right: 0;
+        top: 0px;
+        bottom: 0px;
+        
+        display: block;
+        background-image: url('../assets/imgs/splash.png');
+
+        background-size: cover;
+        
+        -webkit-filter: blur($blur);
+        -moz-filter: blur($blur);
+        -o-filter: blur($blur);
+        -ms-filter: blur($blur);
+        filter: blur($blur);
+      }
+
+      form {
+          position: fixed;
+          height: 230px;
+          top: 0px;
+          bottom: 0px;
+          left: 15px;
+          right: 15px;
+          margin: auto;
+      }
+
+      ion-input {
+          background-color: white;
+          padding: 2px;
+          margin-top: 2px;
+          box-sizing: border-box;
+          border-radius: 3px;
+      }
+
+      ion-input.ng-invalid.ng-dirty {
+          border-left: 2px solid salmon;
+      }
+
+}
