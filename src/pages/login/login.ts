@@ -32,14 +32,9 @@ export class LoginPage {
   }
 
   login() {
-    console.log(this.user);
-
-    this.navCtrl.setRoot(HomePage);
-
     this.api
       .login(this.user.username, this.user.password)
       .then(result => {
-        console.log(result);
         this.navCtrl.setRoot(HomePage);
       }).catch(err => {
         console.error(err);

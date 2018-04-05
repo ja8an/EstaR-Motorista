@@ -16,7 +16,7 @@ export class ApiProvider {
 
   constructor(private http: HttpClient) {
     console.log('Hello ApiProvider Provider');
-    this.baseUrl = 'http://192.168.1.3/rit/api';
+    this.baseUrl = 'http://estar.juno.software/api';
   }
 
   login(username: string, password: string) {
@@ -24,6 +24,14 @@ export class ApiProvider {
       username: username,
       passsword: password
     });
+  }
+
+  coisaroposte(lat, lng){
+    return this.postData(this.baseUrl + '/customers/checkin.json', {
+      lat: lat,
+      lng: 1111,
+      nome: 11111
+    }, this.getAuthHeaders());
   }
 
   private getAuthHeaders() {
