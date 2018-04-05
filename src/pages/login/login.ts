@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
+import { ApiProvider } from '../../providers/api/api';
 
 /**
  * Generated class for the LoginPage page.
@@ -22,7 +23,7 @@ export class LoginPage {
     password: null
   }
 
-  constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
     menu.enable(false);
   }
 
@@ -32,9 +33,17 @@ export class LoginPage {
 
   login() {
     console.log(this.user);
-    if (this.user.username == 'teste' && this.user.password == 'teste') {
-      this.navCtrl.setRoot(HomePage);
-    }
+
+    this.navCtrl.setRoot(HomePage);
+
+    this.api
+      .login(this.user.username, this.user.password)
+      .then(result => {
+        console.log(result);
+        this.navCtrl.setRoot(HomePage);
+      }).catch(err => {
+        console.error(err);
+      });
   }
 
 }

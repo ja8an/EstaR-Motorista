@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ApiProvider } from '../providers/api/api';
 import { WebRequestProvider } from '../providers/web-request/web-request';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { WebRequestProvider } from '../providers/web-request/web-request';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -31,7 +33,8 @@ import { WebRequestProvider } from '../providers/web-request/web-request';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
-    WebRequestProvider
+    WebRequestProvider,
+    ApiProvider
   ]
 })
 export class AppModule { }

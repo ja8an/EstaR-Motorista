@@ -1,6 +1,6 @@
 page-login {
 
-    $blur: 2px;
+    $blur: 0px;
 
     ion-content:before {
         content: "";
@@ -16,6 +16,7 @@ page-login {
         background-image: url('../assets/imgs/splash.png');
 
         background-size: cover;
+        background-position: center center;
         
         -webkit-filter: blur($blur);
         -moz-filter: blur($blur);

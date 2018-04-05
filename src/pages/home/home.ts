@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
 import {
@@ -17,13 +17,15 @@ import {
 })
 export class HomePage {
 
-  map: GoogleMap;
+  @ViewChild('mapcanvas') mapElement: ElementRef;
+  map: any;
 
   constructor(public navCtrl: NavController, public menu: MenuController) {
     menu.enable(true);
   }
 
   ionViewDidLoad() {
+    console.log('Loading map');
     this.loadMap();
   }
 
@@ -36,11 +38,66 @@ export class HomePage {
           lng: -89.3809802
         },
         zoom: 18,
-        tilt: 30
-      }
+        tilt: 0
+      },
+      controls: {
+        compass: false,
+        indoorPicker: true,
+        mapToolbar: false,
+        myLocation: true,
+        myLocationButton: true,
+        zoom: false
+      },
+      preferences: {
+        padding: {
+          top: 50
+        }
+      },
+      gestures: {
+        rotate: false,
+        tilt: false,
+        zoom: false,
+      },
+      styles: [
+        {
+          "featureType": "administrative.land_parcel",
+          "elementType": "labels",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
+        {
+          "featureType": "poi.business",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "labels.text",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
+        {
+          "featureType": "road.local",
+          "elementType": "labels",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        }
+      ]
     };
 
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
+    this.map = GoogleMaps.create(this.mapElement.nativeElement, mapOptions);
 
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
