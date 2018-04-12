@@ -1,20 +1,30 @@
-<!--
-  Generated template for the LoginPage page.
+<ion-header>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-content padding>
+  </ion-header>
+  
+  <ion-content class="background-login">
+    <img src="../assets/imgs/estar_white.png" class="img-home" />
+    <form #form="ngForm" (ngSubmit)="Logar(form)">
+        <div class="input back-transp">
+            <ion-item class="back-transp ion-item">
+                <ion-label style="color:white;" color="secundary" floating>Login</ion-label>
+                <ion-input [(ngModel)]="login" name="login"></ion-input>
+            </ion-item>
+        </div>
+        <div class="input back-transp">
+            <ion-item class="back-transp ion-item2">
+                <ion-label style="color:white;" floating>Senha</ion-label>
+                <ion-input type="password" [(ngModel)]="senha" name="senha"></ion-input>
+            </ion-item>
+        </div>
+        <div class="button-login">
+            <button type="submit" ion-button color="primary" style="width: 80%;" >Entrar</button>
+            <ion-label>Esqueci minha senha</ion-label>
+            <label style="color: #fbff00; font-weight:bold;">{{this.erro}}</label>
+            <img src="../assets/imgs/aguarde.gif" *ngIf="this.aguarde" style="padding-left:40%;" /> 
+        </div>
+    </form>
+    
 
-  <form (ngSubmit)="login()">
-    <div class="text-center">
-      <img src="assets/imgs/estar_white.png" />
-    </div>
-    <ion-input type="text" placeholder="Usuário" autocorrect="off" autocapitalize="none" required="required" [(ngModel)]="user.username"
-      name="username"></ion-input>
-    <ion-input type="password" placeholder="Senha" autocorrect="off" autocapitalize="none" required="required" [(ngModel)]="user.password"
-      name="password"></ion-input>
-    <button ion-button type="submit" block large>Entrar</button>
-  </form>
-
-</ion-content>
+  </ion-content>
+  

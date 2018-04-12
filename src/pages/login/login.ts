@@ -1,44 +1,41 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-
+import { NavController, NavParams } from 'ionic-angular';
+import { Label } from 'ionic-angular/components/label/label';
+import { HtmlParser } from '@angular/compiler';
 import { HomePage } from '../home/home';
 import { ApiProvider } from '../../providers/api/api';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
-
-  user: any = {
-    username: null,
-    password: null
+  private aguarde : boolean = false 
+  private senha : string
+  private login : string
+  private erro : string
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
+    // If we navigated to this page, we will have an item available as a nav param
   }
-
-  constructor(public menu: MenuController, public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
-    menu.enable(false);
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
-  login() {
-    this.api
-      .login(this.user.username, this.user.password)
-      .then(result => {
-        this.navCtrl.setRoot(HomePage);
-      }).catch(err => {
-        console.error(err);
-      });
+    
+    Logar(){
+      if (this.senha == undefined || this.login == undefined){
+          this.erro = "Preencha todos os campos!"
+      }
+      else{
+          this.aguarde = true
+          this.erro = ""
+          this.api.login(this.login, this.senha).then(data => {
+            localStorage.setItem("-USUARIO", JSON.stringify(data))
+            this.navCtrl.setRoot(HomePage) 
+          }).catch(err => {
+            this.aguarde = false;
+            this.erro = "Login e/ou senha inválidos!"
+            
+        })
+               
+    }
   }
 
 }
+

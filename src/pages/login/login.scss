@@ -1,50 +1,52 @@
-page-login {
+.background-login{
+    background-image: url("../assets/imgs/fundo-carro.jpg");
+    background-size: cover;
+    background-position: center;
+}
 
-    $blur: 0px;
+.img-home{
+    z-index: -2;
+    position: absolute;
+    margin-right: auto;
+    margin-left: 10%;
+    margin-top:60%;
+    opacity: 0.5;
+}
 
-    ion-content:before {
-        content: "";
+.input{
+    z-index: 1;
+    display: inline;
+    
+}
 
-        position: fixed;
+.back-transp{
+    background: transparent;
+    width: 68%;
+}
 
-        left: 0;
-        right: 0;
-        top: 0px;
-        bottom: 0px;
-        
-        display: block;
-        background-image: url('../assets/imgs/splash.png');
+.ion-item{
+    position: absolute;
+    margin-top:80%;
+    margin-left:15%;
+}
+.ion-item2{
+    margin-left:15%; 
+    margin-top:100%;
+    position: absolute;
+}
 
-        background-size: cover;
-        background-position: center center;
-        
-        -webkit-filter: blur($blur);
-        -moz-filter: blur($blur);
-        -o-filter: blur($blur);
-        -ms-filter: blur($blur);
-        filter: blur($blur);
-      }
+.input input{
+    color:white;
+}
+.button-login{
+    position: absolute;
+    margin-top:125%;
+    margin-left: 30%;
+    width: 50%;
+}
 
-      form {
-          position: fixed;
-          height: 230px;
-          top: 0px;
-          bottom: 0px;
-          left: 15px;
-          right: 15px;
-          margin: auto;
-      }
-
-      ion-input {
-          background-color: white;
-          padding: 2px;
-          margin-top: 2px;
-          box-sizing: border-box;
-          border-radius: 3px;
-      }
-
-      ion-input.ng-invalid.ng-dirty {
-          border-left: 2px solid salmon;
-      }
-
+.button-login ion-label{
+    color:white;
+    text-decoration: underline;
+    margin-left: 10px;
 }
