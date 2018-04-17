@@ -1,7 +1,6 @@
+import { Network } from '@ionic-native/network';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Label } from 'ionic-angular/components/label/label';
-import { HtmlParser } from '@angular/compiler';
+import { NavController, NavParams, ToastController } from 'ionic-angular';  
 import { HomePage } from '../home/home';
 import { ApiProvider } from '../../providers/api/api';
 
@@ -14,8 +13,18 @@ export class LoginPage {
   private senha : string
   private login : string
   private erro : string
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
+  constructor( public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider, public toast: ToastController) {
     // If we navigated to this page, we will have an item available as a nav param
+    //public net: Network,
+    //console.log(net)
+    
+    let showmsg = this.toast.create({
+      message: 'Verifique sua conxão com a internet ',
+      position: 'bottom'
+    });
+    
+    
+  
   }
     
     Logar(){
@@ -29,6 +38,7 @@ export class LoginPage {
             localStorage.setItem("-USUARIO", JSON.stringify(data))
             this.navCtrl.setRoot(HomePage) 
           }).catch(err => {
+            console.log(err)
             this.aguarde = false;
             this.erro = "Login e/ou senha inválidos!"
             

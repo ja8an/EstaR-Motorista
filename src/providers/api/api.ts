@@ -21,17 +21,25 @@ export class ApiProvider {
 
   login(username: string, password: string) {
     return this.postData(this.baseUrl + '/customers/login.json', {
-      username: username,
+      identification: username,
       passsword: password
     });
   }
 
-  coisaroposte(lat, lng){
-    return this.postData(this.baseUrl + '/customers/checkin.json', {
-      lat: lat,
-      lng: 1111,
-      nome: 11111
-    }, this.getAuthHeaders());
+  
+
+  showCar(){
+    return this.postData(this.baseUrl + '/vehicles/list-avaliable.json',{
+    }, this.getAuthHeaders())
+  }
+
+  setLocalUSer(localizacao: any){
+    return this.postData(this.baseUrl + '/customers/kakak.json', {
+      nLat: localizacao.nLat,
+      nLng: localizacao.nLng,
+      sLat: localizacao.sLat,
+      sLng: localizacao.sLng
+    })
   }
 
   private getAuthHeaders() {
@@ -43,11 +51,12 @@ export class ApiProvider {
   private postData(url, data, headers = {}) {
 
     // Prepares the headers
+    
     var _headers = new HttpHeaders();
     Object.keys(headers).forEach(key => {
       _headers.append(key, headers[key]);
     });
-
+    
     return new Promise((resolve, reject) => {
       this.http
         .post(url, data, { headers: _headers })

@@ -13,7 +13,13 @@
           </ion-buttons>
         </ion-col>
         <ion-col>
-          Carro aqui =)
+            <ion-item>
+                <img [src]="this.image" alt="carro usuário" >
+                <ion-select  multiple="false">
+                  <ion-option *ngFor="let car of cars">{{car.nome}}</ion-option>
+                </ion-select>
+              </ion-item>
+         
         </ion-col>
       </ion-row>
     </ion-grid>
