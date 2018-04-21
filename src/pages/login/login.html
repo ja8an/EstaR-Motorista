@@ -3,7 +3,7 @@
   </ion-header>
   
   <ion-content class="background-login">
-    <img src="../assets/imgs/estar_white.png" class="img-home" />
+    <img src="assets/imgs/estar_white.png" class="img-home" />
     <form #form="ngForm" (ngSubmit)="Logar(form)">
         <div class="input back-transp">
             <ion-item class="back-transp ion-item">
@@ -21,7 +21,7 @@
             <button type="submit" ion-button color="primary" style="width: 80%;" >Entrar</button>
             <ion-label>Esqueci minha senha</ion-label>
             <label style="color: #fbff00; font-weight:bold;">{{this.erro}}</label>
-            <img src="../assets/imgs/aguarde.gif" *ngIf="this.aguarde" style="padding-left:40%;" /> 
+            <img src="assets/imgs/aguarde.gif" *ngIf="this.aguarde" style="padding-left:40%;" /> 
         </div>
     </form>
     

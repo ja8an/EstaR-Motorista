@@ -21,4 +21,17 @@ page-home {
           right: 0px;
           background-color: RGBA(255,255,255,0.8);
       }
+      #show-horas{
+            position: fixed;
+          width: 100%;
+          bottom: 0px;
+          left: 0px;
+          right: 0px;
+          height: 100px;
+          background-color: RGBA(255,255,255,0.8); 
+      }
+      .carro{
+          margin-top:3%;
+          margin-left:10%;
+      }
 }

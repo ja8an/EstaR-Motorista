@@ -12,7 +12,7 @@ import {
   MyLocation
 } from '@ionic-native/google-maps';
 import { ApiProvider } from '../../providers/api/api';
-import { Geolocation } from '@ionic-native/geolocation';
+
 
 
 
@@ -29,18 +29,25 @@ export class HomePage {
   pointersMap: any
   cars : any
   qtdHoras: any
+  tempoFormatado: any = ''
+  public placa: any = null
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public menu: MenuController, public api: ApiProvider) {
     menu.enable(true);
   }
 
   ionViewDidLoad() {
+    this.image = "assets/imgs/celta.png"
      //let user = JSON.parse(window.sessionStorage.getItem("-USUARIO"))
     this.cars = []
     this.cars.push({
-      nome: "Celta"
+      nome: "Celta",
+      imagem: "assets/imgs/celta.png",
+      selected: true
     },{
-      nome:"Gol"
+      nome:"Corsa",
+      imagem: "assets/imgs/corsa.png",
+      selected: false
     })
     this.pointersMap = []
     this.pointersMap.push({
@@ -61,25 +68,7 @@ export class HomePage {
   }
 
   loadMap() {
-    let alertr = this.alertCtrl.create({
-      title: 'Corfirmar a quantidade de horas',
-      message: 'Quantas horas você gostaria de estacionar?',
-      buttons: [
-        {
-          text: 'Uma hora',
-          handler: () => {
-            this.qtdHoras = 1
-          }
-        },
-        {
-          text: 'Duas horas',
-          handler: () => {
-            this.qtdHoras = 2
-          }
-        }
-      ],
-      
-    });
+    
     
     let mapOptions: GoogleMapOptions = {
       camera: {
@@ -152,12 +141,10 @@ export class HomePage {
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
-        console.log('Map is ready!');
-
+        
         // Now you can use all methods safely.
         
         for(let data of this.pointersMap){
-          console.log(data)
           this.map.addMarker({
             title: data.title,
             icon: data.icon,
@@ -170,15 +157,69 @@ export class HomePage {
             .then(marker => {
               marker.on(GoogleMapsEvent.MARKER_CLICK)
                 .subscribe(() => {
-                  alertr.present().then(() => {
-                    alert(this.qtdHoras)
-                  })
-                  
+                  if(this.placa != null){
+                    this.placa = null
+                  }
+                  else{
+                    this.placa = data.id
+                  }
                 });
             });
         }
 
       });
   }
+  mostrarCarros(){
+    
+    let options = {
+      title: 'Escolha o carro desejado',
+      inputs: [],
+      buttons: [{
+        text: "Selecionar",
+        handler: data => {
+          this.image = data
+        }
+      },{
+        text: "Cancelar",
+        handler: () => {
+          alertr.dismiss();
+        }
+      }
+      ]      
+    }
+    for(let car of this.cars){
+      options.inputs.push({
+        type: 'radio',
+        label: car.nome,
+        value: car.imagem,
+        checked: car.selected
+      })
+    }
+    let alertr = this.alertCtrl.create(options);
+    alertr.present()
+  }
+
+
+  SetTime(tempo){
+    if(this.qtdHoras != null){
+      tempo = tempo * 60
+      this.qtdHoras = tempo
+      while(this.qtdHoras > 0){
+        setTimeout(() => {
+          this.qtdHoras - 1
+        }, 1000)
+        let horas = (this.qtdHoras / 60).toPrecision(0)
+        let minutos = (this.qtdHoras % 60)
+        this.tempoFormatado = horas + ":" + minutos
+      }
+      
+      
+    }
+   
+
+  }
+  
+
+  
 
 }
