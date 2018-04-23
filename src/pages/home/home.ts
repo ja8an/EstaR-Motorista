@@ -28,9 +28,9 @@ export class HomePage {
   map: any;
   pointersMap: any
   cars : any
-  qtdHoras: any
+  qtdHoras: any = null
   tempoFormatado: any = ''
-  public placa: any = null
+  public placa: any
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public menu: MenuController, public api: ApiProvider) {
     menu.enable(true);
@@ -52,14 +52,24 @@ export class HomePage {
     this.pointersMap = []
     this.pointersMap.push({
       id: "1",
-      title: "Ponto 1",
+      title: "Shopping Curitiba",
       icon: "Blue",
       animation: "DROP",
       position: {
         lat: -25.4429985,
         lng: -49.2819486
       }
-    })
+    },
+  {
+    id: "2",
+      title: "Praça do Japão",
+      icon: "Blue",
+      animation: "DROP",
+      position: {
+        lat: -25.4455213,
+        lng: -49.2874269
+      }
+  })
     this.api.showCar().then(data => {
       this.image = data
     }).catch(err => console.error(err))
@@ -170,7 +180,8 @@ export class HomePage {
       });
   }
   mostrarCarros(){
-    
+    if(this.tempoFormatado == ''){
+      
     let options = {
       title: 'Escolha o carro desejado',
       inputs: [],
@@ -197,24 +208,41 @@ export class HomePage {
     }
     let alertr = this.alertCtrl.create(options);
     alertr.present()
+    }else{
+      let alertr = this.alertCtrl.create({
+        title: "Aviso",
+        message: "Um veículo ja esta no EstaR, por favor aguarde o tempo acabar!",
+        buttons: ['Entendi']
+      });
+      alertr.present()
+    }
   }
 
 
   SetTime(tempo){
-    if(this.qtdHoras != null){
+  if(this.qtdHoras == null){
       tempo = tempo * 60
       this.qtdHoras = tempo
-      while(this.qtdHoras > 0){
-        setTimeout(() => {
-          this.qtdHoras - 1
-        }, 1000)
-        let horas = (this.qtdHoras / 60).toPrecision(0)
-        let minutos = (this.qtdHoras % 60)
-        this.tempoFormatado = horas + ":" + minutos
-      }
-      
-      
+      this.tempoFormatado = "02:00"
+      const timer = setInterval(() => {
+        if (this.qtdHoras == 0) {
+          this.qtdHoras = null
+          this.tempoFormatado = ''
+          clearInterval(timer)
+        }
+        else{
+          this.qtdHoras = this.qtdHoras - 1 
+          let horas = (this.qtdHoras / 60).toString().substring(0, 1)
+          let minutos = (this.qtdHoras % 60).toString()
+          this.tempoFormatado = "0" + horas + ":" + (minutos.length == 1 ? "0" + minutos : minutos) 
+        }
+       
+      }, 100000)     
     }
+    else{
+      console.log("Sai do if oloco")
+    }
+    
    
 
   }

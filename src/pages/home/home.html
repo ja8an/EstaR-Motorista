@@ -15,7 +15,7 @@
         <ion-col>
             <img [src]="this.image" width="30px"  alt="carro usuário" class="carro" (click)="mostrarCarros()" >
             <ion-icon name="arrow-down" (click)="mostrarCarros()"></ion-icon>
-            <h3 *ngIf="this.tempoFormatado != ''">
+            <h3 *ngIf="this.tempoFormatado != ''" style=" display:inline;margin-left:45%;">
               {{this.tempoFormatado}}
             </h3>
         </ion-col>
