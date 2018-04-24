@@ -1,0 +1,51 @@
+<ion-content padding>
+
+<div class="menu_top-cred">
+<ion-grid>
+    <ion-row>
+    <ion-col col-1>
+        <ion-buttons>
+        <button ion-button menuToggle clear icon-only>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        </ion-buttons>
+    </ion-col>
+    <ion-col>
+        <h1 style="margin-left:25px; margin-top:3px;">Inserção de crédito</h1>
+        <h3 style="margin-left:25px;"> Escolha o cartão de crédito </h3>
+    </ion-col>
+    </ion-row>
+</ion-grid>
+</div>
+
+    
+    <ion-card (click)="abrirInput()" style="margin-top:130px;">
+        <ion-card-header>
+            Visa Eletron
+            <img src="assets/imgs/visa.png" width="20px" style="float: right; display: inline;">
+        </ion-card-header>
+        <ion-card-content>
+            Conta: 0123456-5.<br>
+            Proprietário: Gabriel Reis.<br>
+            Vencimento: 08/2020.
+        </ion-card-content>
+    </ion-card>
+    <ion-card (click)="abrirInput()">
+        <ion-card-header>
+            Master Card
+            <img src="assets/imgs/master-card.png" width="20px" style="float: right; display: inline;">
+        </ion-card-header>
+        <ion-card-content>
+            Conta: 151115-5.<br>
+            Proprietário: Gabriel Reis.<br>
+            Vencimento: 01/2020.
+        </ion-card-content>
+    </ion-card>
+    
+
+    <ion-item *ngIf="this.mostrarInput">
+        <ion-label color="primary" floating>Valor desejado R$</ion-label>
+        <ion-input type="number"></ion-input>
+    </ion-item>
+       
+</ion-content>

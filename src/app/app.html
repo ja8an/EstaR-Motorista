@@ -1,7 +1,10 @@
 <ion-menu type="overlay" [content]="mycontent">
     <ion-content>
         <ion-list>
-            <p>some menu content, could be list items</p>
+                <ion-item (click)="openPage('home')" style="height:200px; background:black; color:white;">Gabriel Reis <ion-icon name="person" item-end></ion-icon></ion-item>
+                <ion-item (click)="openPage('inserirCredito')">Inserir crédito <ion-icon name="cash" item-end></ion-icon></ion-item>
+                <ion-item (click)="openPage('newCard')">Cadastrar novo cartão <ion-icon name="card" item-end></ion-icon></ion-item>
+                <ion-item (click)="openPage('sair')">Sair <ion-icon name="log-out" item-end></ion-icon></ion-item>
         </ion-list>
     </ion-content>
 </ion-menu>

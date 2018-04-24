@@ -29,14 +29,21 @@ export class HomePage {
   pointersMap: any
   cars : any
   qtdHoras: any = null
-  tempoFormatado: any = ''
+  tempoFormatado: any = window.sessionStorage.getItem("-TEMPO") != null ? window.sessionStorage.getItem("-TEMPO") : ''
   public placa: any
+  reais: any = window.sessionStorage.getItem("-VALOR")
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public menu: MenuController, public api: ApiProvider) {
     menu.enable(true);
   }
 
+
+  converterReais(valor){
+    return valor = valor.split(".").length == 1 ? valor + ",00" :  valor.split(".")[1].length == 1 ? valor.split(".")[0] + "," + valor.split(".")[1] + "0" : valor.substring(".",",")
+  }
+
   ionViewDidLoad() {
+    this.reais = this.converterReais(this.reais)
     this.image = "assets/imgs/celta.png"
      //let user = JSON.parse(window.sessionStorage.getItem("-USUARIO"))
     this.cars = []
@@ -99,7 +106,7 @@ export class HomePage {
       },
       preferences: {
         padding: {
-          top: 50
+          top: 70
         }
       },
       gestures: {
@@ -231,14 +238,19 @@ export class HomePage {
 
   SetTime(tempo){
   if(this.qtdHoras == null){
+      let valor = window.sessionStorage.getItem("-VALOR")
+      window.sessionStorage.setItem("-VALOR", (parseFloat(valor) - tempo).toString())
+      this.reais = this.converterReais((parseFloat(valor) - tempo).toString())
       tempo = tempo * 60
       this.qtdHoras = tempo
       
       this.tempoFormatado = tempo == 120 ? "02:00" : "01:00"
+      window.sessionStorage.setItem("-TEMPO", this.tempoFormatado)
       const timer = setInterval(() => {
         if (this.qtdHoras == 0) {
           this.qtdHoras = null
           this.tempoFormatado = ''
+          window.sessionStorage.removeItem("-TEMPO")
           clearInterval(timer)
         }
         else{
@@ -246,6 +258,7 @@ export class HomePage {
           let horas = (this.qtdHoras / 60).toString().substring(0, 1)
           let minutos = (this.qtdHoras % 60).toString()
           this.tempoFormatado = "0" + horas + ":" + (minutos.length == 1 ? "0" + minutos : minutos) 
+          window.sessionStorage.setItem("-TEMPO", this.tempoFormatado)
         }
        
       }, 100000)     

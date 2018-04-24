@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { CreditoPage } from '../pages/Credito/Credito';
 import { ApiProvider } from '../providers/api/api';
 import { WebRequestProvider } from '../providers/web-request/web-request';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     MyApp,
     LoginPage,
-    HomePage
+    HomePage,
+    CreditoPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
   entryComponents: [
     MyApp,
     LoginPage,
-    HomePage
+    HomePage,
+    CreditoPage
   ],
   providers: [
     StatusBar,
