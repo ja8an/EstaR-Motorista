@@ -167,12 +167,22 @@ export class HomePage {
             .then(marker => {
               marker.on(GoogleMapsEvent.MARKER_CLICK)
                 .subscribe(() => {
-                  if(this.placa != null){
-                    this.placa = null
+                  if(this.tempoFormatado != ''){
+                    let alertr = this.alertCtrl.create({
+                      title: "Aviso",
+                      message: "O veículo já se encontra em um ponto, por favor aguarde o tempo acabar!",
+                      buttons: ['Entendi']
+                    });
+                    alertr.present()
+                  }else{
+                    if(this.placa != null){
+                      this.placa = null
+                    }
+                    else{
+                      this.placa = data.id
+                    }
                   }
-                  else{
-                    this.placa = data.id
-                  }
+                  
                 });
             });
         }
@@ -223,7 +233,8 @@ export class HomePage {
   if(this.qtdHoras == null){
       tempo = tempo * 60
       this.qtdHoras = tempo
-      this.tempoFormatado = "02:00"
+      
+      this.tempoFormatado = tempo == 120 ? "02:00" : "01:00"
       const timer = setInterval(() => {
         if (this.qtdHoras == 0) {
           this.qtdHoras = null
@@ -242,6 +253,7 @@ export class HomePage {
     else{
       console.log("Sai do if oloco")
     }
+    this.placa = null
     
    
 
