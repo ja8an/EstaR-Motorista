@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ModalController, NavParams, MenuController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 @Component({
     selector: 'page-home',
@@ -10,16 +11,13 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 
     constructor(public modalCtrl: ModalController,
     public alertCtrl: AlertController,
-    public menu: MenuController){
+    public menu: MenuController,
+    public toastCrtl: ToastController){
         menu.enable(true);
     }
 
     abrirInput(){
-      let alertRet = this.alertCtrl.create({
-        title: "Aviso",
-        message: "Valor inserido com sucesso!",
-        buttons: ['OK']
-      })
+
         let alert = this.alertCtrl.create({
             title: 'Valor',
             message: "Digite o valor desejado para inserção de créditos",
@@ -44,7 +42,12 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
                   let valor = window.sessionStorage.getItem("-VALOR")
                   console.log(data)
                   window.sessionStorage.setItem("-VALOR", (parseFloat(data.Valor) + parseFloat(valor)).toString())
-                  alertRet.present()
+                  let toast = this.toastCrtl.create({
+                    message: 'Valor inserido com sucesso!',
+                    duration: 3000,
+                    position: 'middle'
+                  });
+                  toast.present()
                   alert.dismiss();
                 }
               }

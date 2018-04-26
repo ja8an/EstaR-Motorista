@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, MenuController, AlertController } from 'ionic-angular';
+import { NavController, MenuController, AlertController, ToastController } from 'ionic-angular';
 
 import {
   GoogleMaps,
@@ -29,11 +29,11 @@ export class HomePage {
   pointersMap: any
   cars : any
   qtdHoras: any = null
-  tempoFormatado: any = window.sessionStorage.getItem("-TEMPO") != null ? window.sessionStorage.getItem("-TEMPO") : ''
+  tempoFormatado: any = ''
   public placa: any
   reais: any = window.sessionStorage.getItem("-VALOR")
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public menu: MenuController, public api: ApiProvider) {
+  constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public navCtrl: NavController, public menu: MenuController, public api: ApiProvider) {
     menu.enable(true);
   }
 
@@ -239,8 +239,18 @@ export class HomePage {
   SetTime(tempo){
   if(this.qtdHoras == null){
       let valor = window.sessionStorage.getItem("-VALOR")
-      window.sessionStorage.setItem("-VALOR", (parseFloat(valor) - tempo).toString())
-      this.reais = this.converterReais((parseFloat(valor) - tempo).toString())
+      let result = parseFloat(valor) - tempo
+      if(result <= 0){
+        let toast = this.toastCtrl.create({
+          message: 'Você não possui crédito suficiente para alocar seu carro',
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present()
+        return;
+      }
+      window.sessionStorage.setItem("-VALOR", (result).toString())
+      this.reais = this.converterReais(result.toString())
       tempo = tempo * 60
       this.qtdHoras = tempo
       
@@ -250,7 +260,7 @@ export class HomePage {
         if (this.qtdHoras == 0) {
           this.qtdHoras = null
           this.tempoFormatado = ''
-          window.sessionStorage.removeItem("-TEMPO")
+          //window.sessionStorage.removeItem("-TEMPO")
           clearInterval(timer)
         }
         else{
@@ -258,10 +268,10 @@ export class HomePage {
           let horas = (this.qtdHoras / 60).toString().substring(0, 1)
           let minutos = (this.qtdHoras % 60).toString()
           this.tempoFormatado = "0" + horas + ":" + (minutos.length == 1 ? "0" + minutos : minutos) 
-          window.sessionStorage.setItem("-TEMPO", this.tempoFormatado)
+          //window.sessionStorage.setItem("-TEMPO", this.tempoFormatado)
         }
        
-      }, 100000)     
+      }, 10000)     
     }
     else{
       console.log("Sai do if oloco")
